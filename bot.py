@@ -24,7 +24,8 @@ def get_prefix(client, message):
         except:
             return "."
 
-client = commands.AutoShardedBot(command_prefix = commands.when_mentioned_or(get_prefix), help_command= None, owner_id = 486198835975028757)
+
+client = commands.AutoShardedBot(command_prefix = get_prefix, help_command= None, owner_id = 486198835975028757)
 
 @client.event
 async def on_ready():

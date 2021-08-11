@@ -3,6 +3,8 @@ from discord.ext import commands
 from discord.ext.commands import MissingPermissions
 import json
 
+from discord.ext.commands.core import command
+
 def keystoint(x):
     return {int(k): v for k, v in x.items()}
 
@@ -10,6 +12,32 @@ class Moderation(commands.Cog):
     def __init__(self, client):
         self.client = client
 
+
+    @commands.Cog.listener()
+    async def on_member_ban(self, guild, user: discord.User):
+        with open('./logs.json', 'r') as f:
+            logsf = json.load(f, object_hook=keystoint)
+        if guild.id in logsf:
+            embedv = discord.Embed(color = discord.Colour.random())
+            embedv.add_field(name='Event Type:', value= "Ban")
+            embedv.add_field(name='User:', value= user)
+            embedv.set_footer(text='Epifiz Logging', icon_url="https://images-ext-2.discordapp.net/external/ywSgoes0w0g4O39Zu9vFOho4nGV6uBNcWXNps7SfE_I/%3Fsize%3D256/https/cdn.discordapp.com/avatars/837369249629863977/9416002e65d8c493e6c2b23d34c328cd.png")
+            embedv.set_thumbnail(url="https://images-ext-2.discordapp.net/external/ywSgoes0w0g4O39Zu9vFOho4nGV6uBNcWXNps7SfE_I/%3Fsize%3D256/https/cdn.discordapp.com/avatars/837369249629863977/9416002e65d8c493e6c2b23d34c328cd.png")
+            schannel = self.client.get_channel(logsf[guild.id])
+            await schannel.send(embed=embedv)
+
+    @commands.Cog.listener()
+    async def on_member_unban(self, guild, user):
+        with open('./logs.json', 'r') as f:
+            logsf = json.load(f, object_hook=keystoint)
+        if guild.id in logsf:
+            embedv = discord.Embed(color = discord.Colour.random())
+            embedv.add_field(name='Event Type:', value= "Unban")
+            embedv.add_field(name='User:', value= user)
+            embedv.set_footer(text='Epifiz Logging', icon_url="https://images-ext-2.discordapp.net/external/ywSgoes0w0g4O39Zu9vFOho4nGV6uBNcWXNps7SfE_I/%3Fsize%3D256/https/cdn.discordapp.com/avatars/837369249629863977/9416002e65d8c493e6c2b23d34c328cd.png")
+            embedv.set_thumbnail(url="https://images-ext-2.discordapp.net/external/ywSgoes0w0g4O39Zu9vFOho4nGV6uBNcWXNps7SfE_I/%3Fsize%3D256/https/cdn.discordapp.com/avatars/837369249629863977/9416002e65d8c493e6c2b23d34c328cd.png")
+            schannel = self.client.get_channel(logsf[guild.id])
+            await schannel.send(embed=embedv)
 
     @commands.command(aliases=['setlogs', 'setlog'])
     @commands.guild_only()
