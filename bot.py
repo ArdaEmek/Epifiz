@@ -31,7 +31,6 @@ async def on_ready():
     print(f'{client.user} has connected to Discord!')
     print(f'Epifiz is working on {str(len(client.guilds))} servers.')
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=".help"))
-            
 
 @client.event
 async def on_guild_join(guild):
