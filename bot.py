@@ -103,6 +103,16 @@ async def load_error(ctx, error):
     if isinstance(error, MissingPermissions):
         return
 
+@client.event
+async def on_message(message):
+    if client.user.mentioned_in(message):
+        with open("prefixes.json", "r") as f:
+            prefixes= json.load(f)
+        prefix = prefixes[str(message.guild.id)]
+        await message.channel.send("My prefix is **" + prefix + "** in this server.")
+        await client.process_commands(message)
+    await client.process_commands(message)
+
 @client.command()
 @commands.is_owner()
 async def unload(ctx, extension):
