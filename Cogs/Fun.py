@@ -13,7 +13,7 @@ class Fun(commands.Cog):
     @commands.command()
     async def help(self, ctx):
         embedvar = discord.Embed(color=discord.Colour.random())
-        embedvar.add_field(name="Fun:", value= "- **ping**: Shows API latency.\n - **support** : Support the Epifiz.")
+        embedvar.add_field(name="Fun", value= "- **ping**: Shows API latency.\n - **support** : Support the Epifiz.")
         embedvar.add_field(name="Moderation", value="- **prefix <arg>** : Changes the bot prefix (Administrator)\n- **modlogs <#channel>** : Logs every mod action that is made by Epifiz. (Manage Server)\n- **clear <value>** : Purges messages (Manage Messages)\n- **kick <@user>** : Kicks user (Kick Members)\n- **ban <@user>** : Bans user (Ban Members)\n- **unban <user#1234>** : Unbans User (Ban Members)")
         embedvar.set_footer(text= "Epifiz", icon_url="https://images-ext-2.discordapp.net/external/ywSgoes0w0g4O39Zu9vFOho4nGV6uBNcWXNps7SfE_I/%3Fsize%3D256/https/cdn.discordapp.com/avatars/837369249629863977/9416002e65d8c493e6c2b23d34c328cd.png")
         embedvar.set_thumbnail(url="https://images-ext-2.discordapp.net/external/ywSgoes0w0g4O39Zu9vFOho4nGV6uBNcWXNps7SfE_I/%3Fsize%3D256/https/cdn.discordapp.com/avatars/837369249629863977/9416002e65d8c493e6c2b23d34c328cd.png")
