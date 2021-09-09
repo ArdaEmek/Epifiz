@@ -7,7 +7,7 @@ from discord import Member
 
 TOKEN = 'ODM3MzY5MjQ5NjI5ODYzOTc3.YIri4g.5pI3eZZJPwqEY9bTA3ljt4KwAJ0'
 
-extensions = ['Fun', 'Moderation', 'owner']
+extensions = ['Fun', 'Moderation', 'owner', 'Music']
 
 def get_prefix(client, message):
     try:
@@ -105,7 +105,7 @@ async def load_error(ctx, error):
 
 @client.event
 async def on_message(message):
-    if client.user.mentioned_in(message):
+    if client.user.mentioned_in(message) and message.mention_everyone is False:
         with open("prefixes.json", "r") as f:
             prefixes= json.load(f)
         prefix = prefixes[str(message.guild.id)]
