@@ -433,7 +433,7 @@ class Music(commands.Cog):
         """
         if not ctx.voice_state.voice:
             return await ctx.send('Not connected to any voice channel.')
-        await ctx.voice.disconnect()
+        await ctx.voice_state.stop()
         await ctx.message.add_reaction('✅')
         del self.voice_states[ctx.guild.id]
 
