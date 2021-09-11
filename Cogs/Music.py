@@ -425,7 +425,7 @@ class Music(commands.Cog):
             return
         ctx.voice_state.voice = await destination.connect()
 
-    @commands.command(name='leave', aliases=['disconnect'])
+    @commands.command(name='leave', aliases=['disconnect', 'dc'])
     async def _leave(self, ctx: commands.Context):
         """ The bot leaves the channel in which it currently is in.
         Args:
@@ -433,7 +433,7 @@ class Music(commands.Cog):
         """
         if not ctx.voice_state.voice:
             return await ctx.send('Not connected to any voice channel.')
-        await ctx.voice_state.stop()
+        await ctx.voice.disconnect()
         del self.voice_states[ctx.guild.id]
 
     @commands.command(name='volume')
