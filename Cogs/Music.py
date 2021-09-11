@@ -405,8 +405,10 @@ class Music(commands.Cog):
         destination = ctx.author.voice.channel
         if ctx.voice_state.voice:
             await ctx.voice_state.voice.move_to(destination)
+            await ctx.message.add_reaction('✅')
             return
         ctx.voice_state.voice = await destination.connect()
+        await ctx.message.add_reaction('✅')
 
     @commands.command(name='summon')
     @commands.has_permissions(manage_guild=True)
@@ -419,6 +421,7 @@ class Music(commands.Cog):
         """
         if not channel and not ctx.author.voice:
             raise VoiceError('You are neither connected to a voice channel nor specified a channel to join.')
+
         destination = channel or ctx.author.voice.channel
         if ctx.voice_state.voice:
             await ctx.voice_state.voice.move_to(destination)
@@ -432,11 +435,17 @@ class Music(commands.Cog):
             ctx (commands.Context): The command context
         """
         if not ctx.voice_state.voice:
-            return await ctx.send('Not connected to any voice channel.')
+            return await ctx.reply('Not connected to any voice channel.')
+        
+        if not ctx.author.voice:
+            return await ctx.reply('You need to be in the same voice channel to do that!')
+
+        if not ctx.voice_client.channel == ctx.author.voice.channel:
+            return await ctx.reply('You need to be in the same voice channel to do that!')
         await ctx.voice_state.stop()
         await ctx.guild.voice_client.disconnect()
-        await ctx.message.add_reaction('✅')
         del self.voice_states[ctx.guild.id]
+        await ctx.message.add_reaction('✅')
 
     @commands.command(name='volume')
     async def _volume(self, ctx: commands.Context, *, volume: int):
@@ -584,6 +593,7 @@ class Music(commands.Cog):
 
         if ctx.voice_client:
             if ctx.voice_client.channel != ctx.author.voice.channel:
+                await ctx.reply('Bot is already in a voice channel!')
                 raise commands.CommandError('Bot is already in a voice channel.')
 
 
