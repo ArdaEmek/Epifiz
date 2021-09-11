@@ -30,7 +30,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
         'restrictfilenames': True,
         'noplaylist': False,
         'nocheckcertificate': True,
-        'ignoreerrors': False,
+        'ignoreerrors': True,
         'logtostderr': False,
         'quiet': True,
         'no_warnings': True,
@@ -298,6 +298,7 @@ class Music(commands.Cog):
             return
 
         ctx.voice_state.voice = await destination.connect()
+        await ctx.message.add_reaction('✅')
 
     @commands.command(name='summon')
     @commands.has_permissions(manage_guild=True)
@@ -315,8 +316,9 @@ class Music(commands.Cog):
             return
 
         ctx.voice_state.voice = await destination.connect()
+        await ctx.message.add_reaction('✅')
 
-    @commands.command(name='leave', aliases=['disconnect'])
+    @commands.command(name='leave', aliases=['disconnect', 'dc'])
     @commands.has_permissions(manage_guild=True)
     async def _leave(self, ctx: commands.Context):
         """Clears the queue and leaves the voice channel."""
@@ -325,9 +327,11 @@ class Music(commands.Cog):
             return await ctx.send('Not connected to any voice channel.')
 
         await ctx.voice_state.stop()
+        await ctx.message.add_reaction('✅')
+        
         del self.voice_states[ctx.guild.id]
 
-    @commands.command(name='volume')
+    @commands.command(name='volume', aliases=['vol'])
     async def _volume(self, ctx: commands.Context, *, volume: int):
         """Sets the volume of the player."""
 
@@ -338,7 +342,7 @@ class Music(commands.Cog):
             return await ctx.send('Volume must be between 0 and 100')
 
         ctx.voice_state.volume = volume / 100
-        await ctx.send('Volume of the player set to {}%'.format(volume))
+        await ctx.send('Volume of the player set to {}.'.format(volume))
 
     @commands.command(name='now', aliases=['current', 'playing'])
     async def _now(self, ctx: commands.Context):
