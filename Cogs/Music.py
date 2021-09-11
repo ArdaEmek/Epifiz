@@ -434,6 +434,7 @@ class Music(commands.Cog):
         if not ctx.voice_state.voice:
             return await ctx.send('Not connected to any voice channel.')
         await ctx.voice.disconnect()
+        await ctx.message.add_reaction('✅')
         del self.voice_states[ctx.guild.id]
 
     @commands.command(name='volume')
@@ -457,6 +458,7 @@ class Music(commands.Cog):
         """
         if not ctx.voice_state.is_playing and ctx.voice_state.voice.is_playing():
             ctx.voice_state.voice.pause()
+            await ctx.message.add_reaction('✅')
 
     @commands.command(name='resume')
     async def _resume(self, ctx: commands.Context):
@@ -466,6 +468,7 @@ class Music(commands.Cog):
         """
         if not ctx.voice_state.is_playing and ctx.voice_state.voice.is_paused():
             ctx.voice_state.voice.resume()
+            await ctx.message.add_reaction('✅')
 
     @commands.command(name='stop')
     async def _stop(self, ctx: commands.Context):
@@ -476,6 +479,7 @@ class Music(commands.Cog):
         ctx.voice_state.songs.clear()
         if ctx is not None and ctx.voice_state is not None and ctx.voice_state.is_playing is not None:
             await ctx.voice_state.stop()
+            await ctx.message.add_reaction('✅')
 
     @commands.command(name='skip')
     async def _skip(self, ctx: commands.Context):
@@ -486,6 +490,7 @@ class Music(commands.Cog):
         if not ctx.voice_state.is_playing:
             return await ctx.send('Not playing any music right now...')
         ctx.voice_state.skip()
+        await ctx.message.add_reaction('✅')
 
     @commands.command(name='queue')
     async def _queue(self, ctx: commands.Context, *, page: int = 1):
@@ -516,6 +521,7 @@ class Music(commands.Cog):
         if len(ctx.voice_state.songs) == 0:
             return await ctx.send('Empty queue.')
         ctx.voice_state.songs.shuffle()
+        await ctx.message.add_reaction('✅')
 
     @commands.command(name='remove')
     async def _remove(self, ctx: commands.Context, index: int):
@@ -527,6 +533,7 @@ class Music(commands.Cog):
         if len(ctx.voice_state.songs) == 0:
             return await ctx.send('Empty queue.')
         ctx.voice_state.songs.remove(index - 1)
+        await ctx.message.add_reaction('✅')
 
     @commands.command(name='loop', aliases=["repeat"])
     async def _loop(self, ctx: commands.Context):
@@ -537,6 +544,7 @@ class Music(commands.Cog):
         if not ctx.voice_state.is_playing:
             return await ctx.send('Nothing being played at the moment.')
         ctx.voice_state.loop = not ctx.voice_state.loop
+        await ctx.message.add_reaction('✅')
 
     @commands.command(name='play', aliases=["p"])
     async def _play(self, ctx: commands.Context, *, search: str):
