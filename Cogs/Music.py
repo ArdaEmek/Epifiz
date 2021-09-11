@@ -438,17 +438,7 @@ class Music(commands.Cog):
 
     @commands.command(name='volume')
     async def _volume(self, ctx: commands.Context, *, volume: int):
-        """ Sets the volume for the player.
-        Args:
-            ctx (commands.Context): The command context
-            volume (int): The volume to be set. (between 0 and 100)
-        """
-        if not ctx.voice_state.is_playing:
-            return await ctx.send('Nothing being played at the moment.')
-        if 0 > volume > 100:
-            return await ctx.send('Volume must be between 0 and 100')
-        ctx.voice_state.volume = volume / 100
-        await ctx.send('Volume of the player set to {}%'.format(volume))
+        pass
 
     @commands.command(name='now', aliases=['current', 'playing', "song"])
     async def _now(self, ctx: commands.Context):
@@ -529,7 +519,7 @@ class Music(commands.Cog):
 
     @commands.command(name='remove')
     async def _remove(self, ctx: commands.Context, index: int):
-        """ Removes a song from teh current queue
+        """ Removes a song from the current queue
         Args:
             ctx (commands.Context): The command context
             index (int): The page number
