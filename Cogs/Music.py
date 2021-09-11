@@ -13,7 +13,7 @@ import math
 import os
 
 youtube_dl.utils.bug_reports_message = lambda: ''
-youtube_apiv3_key = os.environ['DEMIDO_DISCORD_YOUTUBE_APIV3_KEY']  # youtube_apiv3_key = "your key"
+youtube_apiv3_key = os.environ['AIzaSyBX6ekes_l4VlyN87eqM13m6y2BZreIo9E']  # youtube_apiv3_key = "your key"
 """ The YouTube APIv3 key. It's higly reccomended to create an environment variable like the one above instead of 
 setting it like shown in the lateral comment.
 """
