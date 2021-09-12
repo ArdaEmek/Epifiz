@@ -43,6 +43,11 @@ class owner(commands.Cog):
         if isinstance(error, MissingPermissions):
             return
 
+    @commands.is_owner()
+    @commands.command()
+    async def say(self, ctx, *args):
+        msg = " ".join(args)
+        await ctx.send(msg)
 
 def setup(client):
     client.add_cog(owner(client))

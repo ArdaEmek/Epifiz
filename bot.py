@@ -130,6 +130,13 @@ async def unload_error(ctx, error):
     if isinstance(error, MissingPermissions):
         return
 
+@client.event
+async def on_command_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("You don't have enough permission to do that!")
+    else:
+        pass
+
 
 for extension in extensions:
     try:

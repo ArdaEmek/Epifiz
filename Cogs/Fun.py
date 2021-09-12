@@ -19,7 +19,7 @@ class Fun(commands.Cog):
         
             )
         embed1 = (discord.Embed(color=discord.Colour.random())
-            .add_field(name="🎉 Fun", value= "- **ping** : Shows API latency.\n - **support** : Support the Epifiz.")
+            .add_field(name="🎉 Fun", value= "- **ping** : Shows API latency.\n - **support** : Support the Epifiz.\n - **help** : Shows the help menu.")
             .set_footer(text= "Epifiz", icon_url="https://images-ext-2.discordapp.net/external/ywSgoes0w0g4O39Zu9vFOho4nGV6uBNcWXNps7SfE_I/%3Fsize%3D256/https/cdn.discordapp.com/avatars/837369249629863977/9416002e65d8c493e6c2b23d34c328cd.png")
         )
 
@@ -37,9 +37,10 @@ class Fun(commands.Cog):
         await embed.add_reaction('🎉')
         await embed.add_reaction('⚙️')
         await embed.add_reaction('🎵')
-        
+        id = embed.id
+
         def check(r: discord.Reaction, u: Union[discord.Member, discord.User]):  # r = discord.Reaction, u = discord.Member or discord.User.
-            return u.id == ctx.author.id and r.message.channel.id == ctx.channel.id and \
+            return u.id == ctx.author.id and r.message.channel.id == ctx.channel.id and r.message.id == id and \
                str(r.emoji) in ["🎉", "⚙️", "🎵", "⬅️"]
         while True:
             try:

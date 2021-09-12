@@ -570,16 +570,15 @@ class Music(commands.Cog):
             playlist = Playlist(self.bot, ctx, playlist_id)
             await playlist.play()
         else:
-            async with ctx.typing():
-                try:
-                    source = await YTDLSource.create_source(ctx, search, loop=self.bot.loop)
-                except YTDLError as e:
-                    await ctx.send('An error occurred while processing this request: {}'.format(str(e)))
-                else:
-                    song = Song(source)
-                    await ctx.voice_state.songs.put(song)
-                    message = await ctx.send('Enqueued {}'.format(str(source)), delete_after=20)
-                    VoiceState.delete_messages.append(message)
+            try:
+                source = await YTDLSource.create_source(ctx, search, loop=self.bot.loop)
+            except YTDLError as e:
+                await ctx.send('An error occurred while processing this request: {}'.format(str(e)))
+            else:
+                song = Song(source)
+                await ctx.voice_state.songs.put(song)
+                message = await ctx.send('Enqueued {}'.format(str(source)), delete_after=20)
+                VoiceState.delete_messages.append(message)
 
     @_join.before_invoke
     @_play.before_invoke

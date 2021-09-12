@@ -23,8 +23,11 @@ class Moderation(commands.Cog):
             embedv.add_field(name='User:', value= user)
             embedv.set_footer(text='Epifiz Logging', icon_url="https://images-ext-2.discordapp.net/external/ywSgoes0w0g4O39Zu9vFOho4nGV6uBNcWXNps7SfE_I/%3Fsize%3D256/https/cdn.discordapp.com/avatars/837369249629863977/9416002e65d8c493e6c2b23d34c328cd.png")
             embedv.set_thumbnail(url="https://images-ext-2.discordapp.net/external/ywSgoes0w0g4O39Zu9vFOho4nGV6uBNcWXNps7SfE_I/%3Fsize%3D256/https/cdn.discordapp.com/avatars/837369249629863977/9416002e65d8c493e6c2b23d34c328cd.png")
-            schannel = self.client.get_channel(logsf[guild.id])
-            await schannel.send(embed=embedv)
+            try:
+                schannel = self.client.get_channel(logsf[ctx.guild.id])
+                await schannel.send(embed=embedv)  
+            except:
+                pass
 
     @commands.Cog.listener()
     async def on_member_unban(self, guild, user):
@@ -36,8 +39,11 @@ class Moderation(commands.Cog):
             embedv.add_field(name='User:', value= user)
             embedv.set_footer(text='Epifiz Logging', icon_url="https://images-ext-2.discordapp.net/external/ywSgoes0w0g4O39Zu9vFOho4nGV6uBNcWXNps7SfE_I/%3Fsize%3D256/https/cdn.discordapp.com/avatars/837369249629863977/9416002e65d8c493e6c2b23d34c328cd.png")
             embedv.set_thumbnail(url="https://images-ext-2.discordapp.net/external/ywSgoes0w0g4O39Zu9vFOho4nGV6uBNcWXNps7SfE_I/%3Fsize%3D256/https/cdn.discordapp.com/avatars/837369249629863977/9416002e65d8c493e6c2b23d34c328cd.png")
-            schannel = self.client.get_channel(logsf[guild.id])
-            await schannel.send(embed=embedv)
+            try:
+                schannel = self.client.get_channel(logsf[ctx.guild.id])
+                await schannel.send(embed=embedv)  
+            except:
+                pass
 
     @commands.command(aliases=['setlogs', 'setlog'])
     @commands.guild_only()
@@ -72,11 +78,14 @@ class Moderation(commands.Cog):
                 embedv.add_field(name='Channel:', value= ctx.message.channel)
                 embedv.add_field(name='Moderator:', value= ctx.message.author)
                 embedv.set_footer(text='Epifiz Logging', icon_url="https://images-ext-2.discordapp.net/external/ywSgoes0w0g4O39Zu9vFOho4nGV6uBNcWXNps7SfE_I/%3Fsize%3D256/https/cdn.discordapp.com/avatars/837369249629863977/9416002e65d8c493e6c2b23d34c328cd.png")
-                embedv.set_thumbnail(url="https://images-ext-2.discordapp.net/external/ywSgoes0w0g4O39Zu9vFOho4nGV6uBNcWXNps7SfE_I/%3Fsize%3D256/https/cdn.discordapp.com/avatars/837369249629863977/9416002e65d8c493e6c2b23d34c328cd.png")
-                schannel = self.client.get_channel(logsf[ctx.guild.id])
-                await schannel.send(embed=embedv)
+                embedv.set_thumbnail(url="https://images-ext-2.discordapp.net/external/ywSgoes0w0g4O39Zu9vFOho4nGV6uBNcWXNps7SfE_I/%3Fsize%3D256/https/cdn.discordapp.com/avatars/837369249629863977/9416002e65d8c493e6c2b23d34c328cd.png") 
                 await ctx.channel.purge(limit=arg)
                 await ctx.send(':white_check_mark: Successfully cleared {} messages.'.format(arg))
+                try:
+                    schannel = self.client.get_channel(logsf[ctx.guild.id])
+                    await schannel.send(embed=embedv)  
+                except:
+                    pass
             else:
                 await ctx.channel.purge(limit=arg)
                 await ctx.send(':white_check_mark: Successfully cleared {} messages.'.format(arg))
@@ -85,6 +94,8 @@ class Moderation(commands.Cog):
     async def clear_error(self, ctx, error):
         if isinstance(error, MissingPermissions):
             await ctx.send(":x: You don't have permission to do that!")
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send(':x: Please specify the amount of messages you want to clear.')
 
     @commands.command(name='kick')
     @commands.guild_only()
@@ -100,10 +111,13 @@ class Moderation(commands.Cog):
             embedv.add_field(name='Moderator:', value= ctx.message.author)
             embedv.add_field(name="Reason:", value= reason)
             embedv.set_footer(text='Epifiz Logging', icon_url="https://images-ext-2.discordapp.net/external/ywSgoes0w0g4O39Zu9vFOho4nGV6uBNcWXNps7SfE_I/%3Fsize%3D256/https/cdn.discordapp.com/avatars/837369249629863977/9416002e65d8c493e6c2b23d34c328cd.png")
-            embedv.set_thumbnail(url="https://images-ext-2.discordapp.net/external/ywSgoes0w0g4O39Zu9vFOho4nGV6uBNcWXNps7SfE_I/%3Fsize%3D256/https/cdn.discordapp.com/avatars/837369249629863977/9416002e65d8c493e6c2b23d34c328cd.png")
-            schannel = self.client.get_channel(logsf[ctx.guild.id])
-            await schannel.send(embed=embedv)
+            embedv.set_thumbnail(url="https://images-ext-2.discordapp.net/external/ywSgoes0w0g4O39Zu9vFOho4nGV6uBNcWXNps7SfE_I/%3Fsize%3D256/https/cdn.discordapp.com/avatars/837369249629863977/9416002e65d8c493e6c2b23d34c328cd.png") 
             await member.kick(reason=reason)
+            try:
+                schannel = self.client.get_channel(logsf[ctx.guild.id])
+                await schannel.send(embed=embedv)  
+            except:
+                pass
         else:       
             await member.kick(reason=reason)
             await ctx.send(f'User {member.mention} has been kicked for: "{reason}".')
@@ -111,7 +125,7 @@ class Moderation(commands.Cog):
     @kick.error
     async def kick_error(self, error, ctx):
         if isinstance(error, error.MissingPermissions):
-            await ctx.send(":redTick: You don't have permission to kick members.")
+            await ctx.send(":x: You don't have permission to kick members.")
 
     @commands.command(name='Ban')
     @commands.guild_only()
@@ -128,10 +142,13 @@ class Moderation(commands.Cog):
             embedv.add_field(name="Reason:", value= reason)
             embedv.set_footer(text='Epifiz Logging', icon_url="https://images-ext-2.discordapp.net/external/ywSgoes0w0g4O39Zu9vFOho4nGV6uBNcWXNps7SfE_I/%3Fsize%3D256/https/cdn.discordapp.com/avatars/837369249629863977/9416002e65d8c493e6c2b23d34c328cd.png")
             embedv.set_thumbnail(url="https://images-ext-2.discordapp.net/external/ywSgoes0w0g4O39Zu9vFOho4nGV6uBNcWXNps7SfE_I/%3Fsize%3D256/https/cdn.discordapp.com/avatars/837369249629863977/9416002e65d8c493e6c2b23d34c328cd.png")
-            schannel = self.client.get_channel(logsf[ctx.guild.id])
-            await schannel.send(embed=embedv)
             await ctx.send(f'User {member.mention} has been banned for: "{reason}".')
             await member.ban(reason=reason)
+            try:
+                schannel = self.client.get_channel(logsf[ctx.guild.id])
+                await schannel.send(embed=embedv)  
+            except:
+                pass
         else:
             await ctx.send(f'User {member.mention} has been banned for: "{reason}".')
             await member.ban(reason=reason)
@@ -139,7 +156,7 @@ class Moderation(commands.Cog):
     @ban.error
     async def ban_error(self, error, ctx):
         if isinstance(error, error.MissingPermissions):
-            await ctx.send(":redTick: You don't have permission to ban members.")
+            await ctx.send(":x: You don't have permission to ban members.")
 
 
     @commands.command(name='Unban', aliases=['pardon', 'uba'])
@@ -156,8 +173,6 @@ class Moderation(commands.Cog):
             embedv.add_field(name='Moderator:', value= ctx.message.author)
             embedv.set_footer(text='Epifiz Logging', icon_url="https://images-ext-2.discordapp.net/external/ywSgoes0w0g4O39Zu9vFOho4nGV6uBNcWXNps7SfE_I/%3Fsize%3D256/https/cdn.discordapp.com/avatars/837369249629863977/9416002e65d8c493e6c2b23d34c328cd.png")
             embedv.set_thumbnail(url="https://images-ext-2.discordapp.net/external/ywSgoes0w0g4O39Zu9vFOho4nGV6uBNcWXNps7SfE_I/%3Fsize%3D256/https/cdn.discordapp.com/avatars/837369249629863977/9416002e65d8c493e6c2b23d34c328cd.png")
-            schannel = self.client.get_channel(logsf[ctx.guild.id])
-            await schannel.send(embed=embedv)
             bans = ctx.guild.bans()
             member_name, member_disc = member.split('#')
             for ban_entry in bans:
@@ -167,6 +182,11 @@ class Moderation(commands.Cog):
                     await ctx.guild.unban(user)
                     await ctx.send(f'Unbanned {user.name}#{user.disc}.')
                     return
+            try:
+                schannel = self.client.get_channel(logsf[ctx.guild.id])
+                await schannel.send(embed=embedv)  
+            except:
+                pass
         else:
             bans = ctx.guild.bans()
             member_name, member_disc = member.split('#')
@@ -182,7 +202,7 @@ class Moderation(commands.Cog):
     @unban.error
     async def unban_error(self, error, ctx):
         if isinstance(error, error.MissingPermissions):
-            await ctx.send(":redTick: You don't have permission to unban members.")
+            await ctx.send(":x: You don't have permission to unban members.")
 
 def setup(client):
     client.add_cog(Moderation(client))
