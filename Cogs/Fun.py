@@ -40,7 +40,7 @@ class Fun(commands.Cog):
         id = embed.id
 
         def check(r: discord.Reaction, u: Union[discord.Member, discord.User]):  # r = discord.Reaction, u = discord.Member or discord.User.
-            return u.id == ctx.author.id and r.message.channel.id == ctx.channel.id and r.message.id == id and \
+            return u.id == ctx.author.id and r.message.id == id and \
                str(r.emoji) in ["🎉", "⚙️", "🎵", "⬅️"]
         while True:
             try:
