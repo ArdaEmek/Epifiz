@@ -79,7 +79,7 @@ class Moderation(commands.Cog):
                 embedv.add_field(name='Moderator:', value= ctx.message.author)
                 embedv.set_footer(text='Epifiz Logging', icon_url="https://images-ext-2.discordapp.net/external/ywSgoes0w0g4O39Zu9vFOho4nGV6uBNcWXNps7SfE_I/%3Fsize%3D256/https/cdn.discordapp.com/avatars/837369249629863977/9416002e65d8c493e6c2b23d34c328cd.png")
                 embedv.set_thumbnail(url="https://images-ext-2.discordapp.net/external/ywSgoes0w0g4O39Zu9vFOho4nGV6uBNcWXNps7SfE_I/%3Fsize%3D256/https/cdn.discordapp.com/avatars/837369249629863977/9416002e65d8c493e6c2b23d34c328cd.png") 
-                await ctx.channel.purge(limit=arg)
+                await ctx.channel.purge(limit=arg + 1)
                 await ctx.send(':white_check_mark: Successfully cleared {} messages.'.format(arg))
                 try:
                     schannel = self.client.get_channel(logsf[ctx.guild.id])

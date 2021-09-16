@@ -33,51 +33,56 @@ class Fun(commands.Cog):
             
             )
 
-        embed = await ctx.send(embed=mainembed)
-        await embed.add_reaction('🎉')
-        await embed.add_reaction('⚙️')
-        await embed.add_reaction('🎵')
-        id = embed.id
+        if isinstance(ctx.channel, discord.channel.DMChannel):
+            await ctx.send(embed=embed1)
+            await ctx.send(embed=embed2)
+            await ctx.send(embed=embed3)
+        else:
+            embed = await ctx.send(embed=mainembed)
+            await embed.add_reaction('🎉')
+            await embed.add_reaction('⚙️')
+            await embed.add_reaction('🎵')
+            id = embed.id
 
-        def check(r: discord.Reaction, u: Union[discord.Member, discord.User]):  # r = discord.Reaction, u = discord.Member or discord.User.
-            return u.id == ctx.author.id and r.message.id == id and \
-               str(r.emoji) in ["🎉", "⚙️", "🎵", "⬅️"]
-        while True:
-            try:
-                reaction, user = await self.client.wait_for(event = 'reaction_add', check = check, timeout = 60.0)
+            def check(r: discord.Reaction, u: Union[discord.Member, discord.User]):  # r = discord.Reaction, u = discord.Member or discord.User.
+                return r.message.id == id and ctx.author.id == u.id and \
+                str(r.emoji) in ["🎉", "⚙️", "🎵", "⬅️"]
+            while True:
+                try:
+                    reaction, user = await self.client.wait_for(event = 'reaction_add', check = check, timeout = 60.0)
 
-                if str(reaction.emoji) == "🎉":
-                    await embed.clear_reaction('🎉')
-                    await embed.clear_reaction('⚙️')
-                    await embed.clear_reaction('🎵')
-                    await embed.remove_reaction(reaction, user)
-                    await embed.edit(embed=embed1)
-                    await embed.add_reaction('⬅️')
+                    if str(reaction.emoji) == "🎉":
+                        await embed.clear_reaction('🎉')
+                        await embed.clear_reaction('⚙️')
+                        await embed.clear_reaction('🎵')
+                        await embed.remove_reaction(reaction, user)
+                        await embed.edit(embed=embed1)
+                        await embed.add_reaction('⬅️')
 
-                elif str(reaction.emoji) == "⚙️":
-                    await embed.clear_reaction('🎉')
-                    await embed.clear_reaction('⚙️')
-                    await embed.clear_reaction('🎵')
-                    await embed.edit(embed=embed2)
-                    await embed.add_reaction('⬅️')
+                    elif str(reaction.emoji) == "⚙️":
+                        await embed.clear_reaction('🎉')
+                        await embed.clear_reaction('⚙️')
+                        await embed.clear_reaction('🎵')
+                        await embed.edit(embed=embed2)
+                        await embed.add_reaction('⬅️')
 
-                elif str(reaction.emoji) == "🎵":
-                    await embed.clear_reaction('🎉')
-                    await embed.clear_reaction('⚙️')
-                    await embed.clear_reaction('🎵')
-                    await embed.edit(embed=embed3)
-                    await embed.add_reaction('⬅️')
+                    elif str(reaction.emoji) == "🎵":
+                        await embed.clear_reaction('🎉')
+                        await embed.clear_reaction('⚙️')
+                        await embed.clear_reaction('🎵')
+                        await embed.edit(embed=embed3)
+                        await embed.add_reaction('⬅️')
 
-                elif str(reaction.emoji) == "⬅️":
-                    await embed.clear_reaction('⬅️')
-                    await embed.edit(embed=mainembed)
-                    await embed.add_reaction('🎉')
-                    await embed.add_reaction('⚙️')
-                    await embed.add_reaction('🎵')
+                    elif str(reaction.emoji) == "⬅️":
+                        await embed.clear_reaction('⬅️')
+                        await embed.edit(embed=mainembed)
+                        await embed.add_reaction('🎉')
+                        await embed.add_reaction('⚙️')
+                        await embed.add_reaction('🎵')
 
-            except asyncio.TimeoutError:
-                await embed.delete()
-                break
+                except asyncio.TimeoutError:
+                    await embed.delete()
+                    break
 
 
     @commands.command()
