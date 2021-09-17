@@ -45,12 +45,22 @@ class Moderation(commands.Cog):
             except:
                 pass
 
-    @commands.command(aliases=['setlogs', 'setlog'])
+    @commands.command(aliases=['setlogs', 'setlog', 'modlog'])
     @commands.guild_only()
     @commands.has_permissions(manage_guild=True)
     async def modlogs(self,ctx,channel:discord.TextChannel = None):
         if channel is None:
-            await ctx.send(':x: You have to state a channel to log!')
+            try:
+                with open("./logs.json", "r") as f:
+                    mlogs= json.load(f)
+
+                mlogs.pop(str(ctx.guild.id))
+
+                with open('./logs.json', 'w') as f:
+                    json.dump(mlogs, f, indent= 4)
+                await ctx.send(':white_check_mark: Removed log channel!')
+            except:
+                await ctx.send(':x: You have to state a channel to log!')
         else:
             try:
                 with open('./logs.json', 'r') as f:
@@ -143,7 +153,8 @@ class Moderation(commands.Cog):
             embedv.set_footer(text='Epifiz Logging', icon_url="https://images-ext-2.discordapp.net/external/ywSgoes0w0g4O39Zu9vFOho4nGV6uBNcWXNps7SfE_I/%3Fsize%3D256/https/cdn.discordapp.com/avatars/837369249629863977/9416002e65d8c493e6c2b23d34c328cd.png")
             embedv.set_thumbnail(url="https://images-ext-2.discordapp.net/external/ywSgoes0w0g4O39Zu9vFOho4nGV6uBNcWXNps7SfE_I/%3Fsize%3D256/https/cdn.discordapp.com/avatars/837369249629863977/9416002e65d8c493e6c2b23d34c328cd.png")
             await ctx.send(f'User {member.mention} has been banned for: "{reason}".')
-            await member.ban(reason=reason)
+            if reason == None:
+                await member.ban(reason="Banned by {}#{}".format(ctx.author.name, ctx.author.discriminator))
             try:
                 schannel = self.client.get_channel(logsf[ctx.guild.id])
                 await schannel.send(embed=embedv)  
