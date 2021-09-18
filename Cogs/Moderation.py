@@ -69,9 +69,9 @@ class Moderation(commands.Cog):
 
                 with open('./logs.json', 'w') as f:
                     json.dump(logsf, f, indent= 4)
-                await ctx.send('Successfully set modlogs to **{}** channel!'.format(channel))
+                await ctx.send(':white_check_mark: Successfully set modlogs to **{}** channel!'.format(channel))
             except:
-                await ctx.send('An error occurred, please contact to Epifiz Developers!')            
+                await ctx.send(':x: An error occurred, please contact to Epifiz Developers!')            
 
     @commands.command(aliases=['purge'])
     @commands.guild_only()
