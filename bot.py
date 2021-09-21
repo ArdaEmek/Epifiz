@@ -5,6 +5,7 @@ from discord.ext import commands
 from discord.ext.commands import has_permissions, MissingPermissions
 from discord import Member
 
+
 TOKEN = 'ODM3MzY5MjQ5NjI5ODYzOTc3.YIri4g.5pI3eZZJPwqEY9bTA3ljt4KwAJ0'
 DTOKEN = 'ODg5MTcyNDk5Njk3Mzc3MzQx.YUdYaw.UCv9vCtHaoMyKNOt68hQca3zykk'
 
@@ -134,8 +135,10 @@ async def unload_error(ctx, error):
 @client.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("Please complete the required arguements.")
+    elif isinstance(error, MissingPermissions):
         await ctx.send("You don't have enough permission to do that!")
-    else:
+    elif isinstance(error, commands.CommandError):
         pass
 
 
