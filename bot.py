@@ -138,8 +138,6 @@ async def on_command_error(ctx, error):
         await ctx.send("Please complete the required arguements.")
     elif isinstance(error, MissingPermissions):
         await ctx.send("You don't have enough permission to do that!")
-    elif isinstance(error, commands.CommandError):
-        print("An error occurred. Guild id : {} . Error: ".format(ctx.guild.id), error)
 
 
 for extension in extensions:
