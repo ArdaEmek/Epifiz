@@ -437,6 +437,12 @@ class Music(commands.Cog):
         if not ctx.voice_state.voice:
             return await ctx.reply('Not connected to any voice channel.')
         
+        if ctx.author.guild_permissions.deafen_members:
+            await ctx.voice_state.stop()
+            await ctx.guild.voice_client.disconnect()
+            del self.voice_states[ctx.guild.id]
+            return await ctx.message.add_reaction('✅')
+
         if not ctx.author.voice:
             return await ctx.reply('You need to be in the same voice channel to do that!')
 
