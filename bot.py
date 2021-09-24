@@ -134,7 +134,9 @@ async def unload_error(ctx, error):
 
 @client.event
 async def on_command_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
+    if isinstance(error, commands.BotMissingPermissions):
+        await ctx.send("I don't have ennough permissions to do that!")
+    elif isinstance(error, commands.MissingRequiredArgument):
         await ctx.send("Please complete the required arguements.")
     elif isinstance(error, MissingPermissions):
         await ctx.send("You don't have enough permission to do that!")
